@@ -1,3 +1,3 @@
 <?php
 
-echo shell_exec('cd /home/ubuntu; sh ./pull.sh ');
+echo shell_exec('ls /home ');
