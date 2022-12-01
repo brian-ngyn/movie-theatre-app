@@ -3,6 +3,5 @@
 
 
 include_once('./endpointIncludes.php');
-assertRequestMethod('GET');
 
-echo "{}";
+echo "Test6";
