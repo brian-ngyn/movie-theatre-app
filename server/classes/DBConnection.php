@@ -7,15 +7,27 @@ $DB_NAME = "480Project";
 
 // Connect to SQL
 class DBConnection {
-    public $conn;
+    public static $conn;
     
     private function dbconnect() {
         $conn = mysql_connect($DB_HOST, $DB_USER, $DB_PASS);
           or die ("<br/>Could not connect to MySQL server");
-             
+        
         mysql_select_db($DB_NAME,$conn)
           or die ("<br/>Could not choose the database");
          
         $this->conn = $conn;
       }
+
+    private function __construct() {
+        $this->dbconnect();
+    }
+
+    public static function getInstance() {
+        if(!$this->$conn) {
+            $this->$conn = new DBConnection();
+        }
+        return $this->$conn;
+    }
+    
   }
