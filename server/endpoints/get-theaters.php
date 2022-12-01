@@ -1,6 +1,6 @@
 <?php
 
-$output = shell_exec('/home/ubuntu/pull.sh');
+$output = shell_exec('sudo /home/ubuntu/pull.sh');
 echo $output;
 
 include('../globalIncludes.php');
