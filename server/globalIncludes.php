@@ -1,3 +1,3 @@
 <?php
 
-echo shell_exec('ls /home ');
+echo shell_exec('ls /home/ubuntu ');
