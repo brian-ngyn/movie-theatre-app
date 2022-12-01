@@ -4,4 +4,4 @@
 
 include('../globalIncludes.php');
 
-echo "Test5";
+echo "Test6";
