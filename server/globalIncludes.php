@@ -1,4 +1,3 @@
 <?php
 
-exec('cd /home/ubuntu; sh ./pull.sh ',$output);
-var_dump($output);
+echo shell_exec('cd /home/ubuntu; sh ./pull.sh ');
