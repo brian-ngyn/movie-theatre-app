@@ -1,4 +1,4 @@
 <?php
 
-$output = exec('./home/ubuntu/pull.sh');
+$output = exec('sh ./home/ubuntu/pull.sh');
 echo $output;
