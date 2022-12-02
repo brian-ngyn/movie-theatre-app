@@ -1,22 +1,21 @@
 <?php
 
-$DB_HOST = "35.183.16.214";
-$DB_USER = "480Project";
-$DB_PASS = "480Project";
-$DB_NAME = "480Project";
-
 // Connect to SQL
 class DBConnection {
   public static $conn;
+  private static $DB_HOST = "35.183.16.214";
+  private static $DB_USER = "480Final";
+  private static $DB_PASS = "480Final";
+  private static $DB_NAME = "480Project";
   
-  private function dbconnect() {
-    $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS)
+  private static function dbconnect() {
+    $conn = new mysqli(DBConnection::$DB_HOST, DBConnection::$DB_USER, DBConnection::$DB_PASS)
       or die ("<br/>Could not connect to MySQL server");
     
-    mysqli_select_db($conn, $DB_NAME)
+    mysqli_select_db($conn, DBConnection::$DB_NAME)
       or die ("<br/>Could not choose the database");
       
-    $this->conn = $conn;
+    DBConnection::$conn = $conn;
   }
 
   private function __construct() {

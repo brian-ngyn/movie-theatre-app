@@ -10,7 +10,8 @@ if ($method == 'POST') {
   $password = $_POST['password'];
 
   $sql = "SELECT * FROM Movies";
-  $result = DBConnection->getInstance().query($sql);
+  $result = DBConnection::getInstance()->query($sql);
+  
 }
 
 echo "Test6";
