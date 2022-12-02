@@ -14,17 +14,17 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
+import { useUserAuth } from '../authentication/UserAuthContext';
 
 const theme = createTheme();
 
 export default function Login() {
+  const { userid, login } = useUserAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    login(data.get('email'), data.get('password'));
   };
 
   return (
