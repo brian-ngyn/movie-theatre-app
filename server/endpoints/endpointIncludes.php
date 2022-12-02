@@ -2,8 +2,8 @@
 
 
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/RESTful.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/server/globalIncludes.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/server/classes/RESTful.php');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
