@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
+import { useUserAuth } from '../authentication/UserAuthContext';
 
 const theme = createTheme();
 

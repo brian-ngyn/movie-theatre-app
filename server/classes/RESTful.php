@@ -3,6 +3,7 @@
 
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
+
 class RESTful {
     public $returnObj = [];
 
