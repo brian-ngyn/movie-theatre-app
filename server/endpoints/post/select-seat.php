@@ -2,6 +2,6 @@
 
 
 
-include_once('./endpointIncludes.php');
+include_once('../endpointIncludes.php');
 
 echo "Test6";

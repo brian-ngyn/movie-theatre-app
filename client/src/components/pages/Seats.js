@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,9 +17,52 @@ import KoolContainer from '../KoolContainer/KoolContainer';
 
 const theme = createTheme();
 
+
 export default function Seats() {
-  
-  const [seats, setSeats] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},  {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},]);
+
+  const [seats, setSeats] = useState([
+    { id: 1, seat: "A1", status: "available" },
+    { id: 2, seat: "A2", status: "available" },
+    { id: 3, seat: "A3", status: "available" },
+    { id: 4, seat: "A4", status: "available" },
+    { id: 5, seat: "A5", status: "available" },
+    { id: 6, seat: "A6", status: "available" },
+    { id: 7, seat: "A7", status: "available" },
+    { id: 8, seat: "A8", status: "available" },
+    { id: 9, seat: "A9", status: "available" },
+    { id: 10, seat: "A10", status: "available" },
+    { id: 11, seat: "A11", status: "available" },
+    { id: 12, seat: "A12", status: "available" },
+    { id: 13, seat: "A13", status: "available" },
+    { id: 14, seat: "A14", status: "available" },
+    { id: 15, seat: "A15", status: "available" },
+    { id: 16, seat: "A16", status: "available" },
+    { id: 17, seat: "A17", status: "available" },
+    { id: 18, seat: "A18", status: "available" },
+    { id: 19, seat: "A19", status: "available" },
+    { id: 20, seat: "B1", status: "available" },
+    { id: 21, seat: "B2", status: "available" },
+    { id: 22, seat: "B3", status: "available" },
+    { id: 23, seat: "B4", status: "available" },
+    { id: 24, seat: "B5", status: "available" },
+
+  ]);
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [ticketAmount, setTicketAmount] = useState(0);
+
+  const selectSeat = (id) => {
+
+    const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
+    setSelectedSeats([...reducedSeats, id]);
+  }
+  const removeAmount = () => {
+    if (ticketAmount > 1) {
+      setTicketAmount(ticketAmount - 1);
+      const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
+      setSelectedSeats([...reducedSeats]);
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -30,28 +73,63 @@ export default function Seats() {
             <div className='bg-white opacity-75 h-full w-full text-black'>
               <h2 className='text-black mt-3 text-2xl'>Tickets</h2>
               <div className='border-black border rounded-2xl w-4/5 h-10 grid grid-cols-3 m-auto mt-4 justify-center items-center'>
-                <div className='grid text-black h-full border-black border rounded-l-2xl justify-center items-center'>
+                <div className='grid text-black h-full border-black border rounded-l-2xl justify-center items-center' onClick={() => setTicketAmount(ticketAmount + 1)}>
                   +
                 </div>
                 <div className='grid text-black h-full justify-center items-center'>
-                  2
+                  {ticketAmount}
                 </div>
-                <div className='grid text-black h-full border-black border rounded-r-2xl justify-center items-center'>
+                <div className='grid text-black h-full border-black border rounded-r-2xl justify-center items-center' onClick={removeAmount}>
                   -
                 </div>
+              </div>
+              <div className='rounded-2xl w-4/5 h-10 grid grid-cols-1 m-auto mt-4 justify-center items-center'>
+                {selectedSeats.map((seatId, index) => (
+                  <div className='grid m-auto w-4/5 mt-4'>
+                    <div className='grid text-black h-ful w-full justify-center items-center'>
+                      <div className='text-black m-auto w-full border p-3'>
+                        Ticket #{index + 1}: {seats.filter((seat) => seat.id == seatId)[0].seat}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
           <div className='grid h-full col-span-8'>
-            <div className='grid border m-auto w-3/5 h-4/5 rounded-lg mt-4 bg-white opacity-95 p-3 grid-cols-10 '>
-              {seats.map((seat) => (
-                <div className='rounded-md bg-black h-10 w-10'>
 
-                </div>
-              ))}
+            <div className='grid border m-auto w-3/5 h-full rounded-lg mt-4 bg-white opacity-95 '>
+              <div className='m-auto bg-black w-11/12 rounded-xl'>SCREEN</div>
+              <div className='grid grid-cols-10 p-3'>
+                {seats.map((seat) => (
+                  <div key={seat.id} className='grid grid-cols-1 rounded-md bg-black h-10 w-10 justify-center items-center cursor' onClick={() => selectSeat(seat.id)}>
+                    {
+                      selectedSeats.includes(seat.id) ?
+                        <div className='grid rounded-md bg-white m-1 opacity-100 h-4/5 w-4/5 m-auto text-black'>
+                          X
+                        </div>
+                        :
+                        null
+                    }
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className='border m-auto w-3/5 h-1/4 rounded-lg mt-4   '>
-              H
+            <div className='grid border m-auto w-3/5 h-20 rounded-lg mt-10'>
+              {ticketAmount !== selectedSeats.length ?
+                <div>
+                  <h2 className='text-red mt-3 text-2xl'>Please select seats for all tickets</h2>
+                </div>
+                : ticketAmount !== 0 ?
+                  <div>
+                    <h2 className='text-red mt-3 text-2xl'><Button variant='contained'>Confirm Seat Selection</Button></h2>
+                  </div>
+                  :
+                  <div>
+                    <h2 className='text-red mt-3 text-2xl'>Select the amount of tickets in the left menu bar</h2>
+                  </div>
+              }
+
             </div>
           </div>
         </div>
