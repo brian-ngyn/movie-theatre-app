@@ -3,10 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      backgroundImage: theme => ({
-        'film-img': "url('/public/Images/Background.svg')",
-      })
-    },
+      backgroundImage: {
+        'movie-backdrop': "url('/public/backdrop.jpg')",
+      }
+    }
   },
   plugins: [],
 };

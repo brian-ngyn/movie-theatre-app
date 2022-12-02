@@ -13,26 +13,23 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
+import KoolContainer from '../KoolContainer/KoolContainer';
+import { useUserAuth } from '../authentication/UserAuthContext';
 
 const theme = createTheme();
 
 export default function Register() {
+  const { userid, signup } = useUserAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      fullname: data.get('fullname'),
-      creditcard: data.get('creditcard'),
-      cvc: data.get('cvc'),
-      expiry: data.get('expiry'),
-    });
+    signup(data.get('email'), data.get('password'), data.get('fullname'), data.get('creditcard'), data.get('cvc'), data.get('expirydate'));
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar/>
+      <KoolContainer>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -95,7 +92,7 @@ export default function Register() {
               margin="normal"
               required
               fullWidth
-              name="expiry"
+              name="expirydate"
               label="Expiry (MMYY)"
               id="expiry"
             />
@@ -117,6 +114,7 @@ export default function Register() {
           </Box>
         </Box>
       </Container>
+      </KoolContainer>
     </ThemeProvider>
   );
 }
