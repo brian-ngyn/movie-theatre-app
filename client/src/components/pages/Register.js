@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
+import KoolContainer from '../KoolContainer/KoolContainer';
 
 const theme = createTheme();
 
@@ -32,7 +33,7 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar/>
+      <KoolContainer>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -117,6 +118,7 @@ export default function Register() {
           </Box>
         </Box>
       </Container>
+      </KoolContainer>
     </ThemeProvider>
   );
 }

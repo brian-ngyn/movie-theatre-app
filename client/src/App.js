@@ -8,6 +8,7 @@ import Dispute from './components/pages/Dispute';
 import Movies from './components/pages/Movies';
 import Theatres from './components/pages/Theatres';
 import  NavBar  from "./components/navbar/NavBar";
+import Seats from './components/pages/Seats';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dispute" element={<Dispute />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/theatres" element={<Theatres />} />
+        <Route path="/seats" element={<Seats />} />
       </Routes>
     </div>
   );
