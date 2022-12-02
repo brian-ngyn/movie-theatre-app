@@ -9,7 +9,7 @@ const Threatres = () => {
   const [theatres, setTheatres] = useState([]);
 
   const getTheatres = () => {
-    axios.get("http://localhost:3001/endpoints/list/theaters.php").then((response) => {
+    axios.get("http://35.183.16.214/server/endpoints/list/theaters.php").then((response) => {
       setTheatres(response.data.body);
     });
   };

@@ -9,7 +9,7 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
 
   const getMovies = () => {
-    axios.get("http://localhost:3001/endpoints/list/movies.php").then((response) => {
+    axios.get("http://35.183.16.214/server/endpoints/list/movies.php").then((response) => {
       setMovies(response.data.body);
     });
   };

@@ -16,7 +16,7 @@ export function UserAuthContextProvider({children}) {
         id: 0
       };
 
-      axios.post("http://localhost:3001/endpoints/post/register.php", {
+      axios.post("http://35.183.16.214/server/endpoints/post/register.php", {
           email: email,
           password: password,
           fullname: fullname,
@@ -31,7 +31,7 @@ export function UserAuthContextProvider({children}) {
     };
 
     function login(email, password){
-      axios.post("http://localhost:3001/endpoints/post/login.php", {
+      axios.post("http://35.183.16.214/server/endpoints/post/login.php", {
         email: email,
         password: password
       }).then((response) => {
