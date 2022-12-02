@@ -14,10 +14,12 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
+import { useUserAuth } from '../authentication/UserAuthContext';
 
 const theme = createTheme();
 
 export default function Seats() {
+  const { user } = useUserAuth();
   
   const [seats, setSeats] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},  {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},]);
 

@@ -1,37 +1,26 @@
 import { React, useEffect, useState }from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
+import axios from "axios";
+import { useUserAuth } from "../authentication/UserAuthContext";
 
 const Threatres = () => {
-  const theatres = {
-    "1": {
-      name: "Scotiabank Theatre Chinook",
-      location: "Calgary",
-      rating: "4.5/5"
-    },
-    "2": {
-      name: "Cineplex Odeon Eau Claire Market",
-      location: "Calgary",
-      rating: "4.5/5"
-    },
-    "3": {
-      name: "Cineplex VIP Cinemas University District",
-      location: "Calgary",
-      rating: "4.5/5"
-    },
-    "4": {
-      name: "Landmark Cinemas Country Hills",
-      location: "Calgary",
-      rating: "4.5/5"
-    },
-    "5": {
-      name: "Cineplex Odeon Crowfoot Crossing",
-      location: "Calgary",
-      rating: "4.5/5"
-    }
+  const { user } = useUserAuth();
+  const [theatres, setTheatres] = useState([]);
+
+  const getTheatres = () => {
+    axios.get("http://localhost:3001/endpoints/list/theaters.php").then((response) => {
+      setTheatres(response.data.body);
+    });
   };
 
-  console.log(theatres);
+  useEffect(() => {
+    getTheatres();
+  }, []);
+
+  useEffect(() => {
+    console.log(theatres);
+  }, [theatres]);
 
   return (
     <>
