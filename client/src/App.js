@@ -7,10 +7,12 @@ import Login from './components/pages/Login';
 import Dispute from './components/pages/Dispute';
 import Movies from './components/pages/Movies';
 import Theatres from './components/pages/Theatres';
+import  NavBar  from "./components/navbar/NavBar";
 
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
