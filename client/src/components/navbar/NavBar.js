@@ -24,40 +24,38 @@ export default function Example() {
   }, []);
 
   const navList = (
-    
-      <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <a href="/movies" className="flex items-center">
-            Movies
-          </a>
-        </Typography>
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <a href="/theatres" className="flex items-center">
-            Theatres
-          </a>
-        </Typography>
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <a href="/dispute" className="flex items-center">
-            Dispute Ticket
-          </a>
-        </Typography>
-      </ul>
-  
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/movies" className="flex items-center">
+          Movies
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/theatres" className="flex items-center">
+          Theatres
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="/dispute" className="flex items-center">
+          Dispute Ticket
+        </a>
+      </Typography>
+    </ul>
   );
 
   return (
@@ -66,7 +64,10 @@ export default function Example() {
       className="bg-zinc-700 bg-cover py-4 px-4 lg:px-8 lg:py-10 text-white text-xl"
     >
       <div className="container mx-auto flex items-center justify-end">
-      <img src="../../../Images/MovieIcon.svg" className="absolute top-4 left-10"/>
+        <img
+          src="../../../Images/MovieIcon.svg"
+          className="absolute top-4 left-10"
+        />
         <Typography
           as="a"
           href="/"
