@@ -24,8 +24,6 @@ const Threatres = () => {
 
   return (
     <>
-      <NavBar/>
-      
       <div>theatres page</div>
     </>
   );

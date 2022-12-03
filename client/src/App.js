@@ -14,18 +14,18 @@ import { UserAuthContextProvider } from './components/authentication/UserAuthCon
 function App() {
   return (
     <div className="App">
-      <NavBar />
-        <UserAuthContextProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dispute" element={<Dispute />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/theatres" element={<Theatres />} />
-            <Route path="/seats" element={<Seats />} />
-          </Routes>
-        </UserAuthContextProvider>
+      <UserAuthContextProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dispute" element={<Dispute />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/theatres" element={<Theatres />} />
+          <Route path="/seats" element={<Seats />} />
+        </Routes>
+      </UserAuthContextProvider>
     </div>
   );
 }

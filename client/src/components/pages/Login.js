@@ -15,16 +15,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function Login() {
-  const { userid, login } = useUserAuth();
+  const { user, login } = useUserAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     login(data.get('email'), data.get('password'));
+    navigate("/");
   };
 
   return (
@@ -36,7 +39,7 @@ export default function Login() {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -52,17 +55,17 @@ export default function Login() {
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                autoFocus
-                fontColor='green'
                 className='bg-white rounded-lg'
               />
               <TextField
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 name="password"
