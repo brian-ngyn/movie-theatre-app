@@ -2,7 +2,7 @@
 
 
 
-include_once('./endpointIncludes.php');
+include_once('../endpointIncludes.php');
 assertRequestMethod('GET');
 
 
