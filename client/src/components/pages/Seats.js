@@ -53,9 +53,10 @@ export default function Seats() {
   const [ticketAmount, setTicketAmount] = useState(0);
 
   const selectSeat = (id) => {
-
-    const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
-    setSelectedSeats([...reducedSeats, id]);
+    if (!selectedSeats.find((seat) => seat === id) && ticketAmount) {
+      const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
+      setSelectedSeats([...reducedSeats, id]);
+    }
   }
   const removeAmount = () => {
     if (ticketAmount > 1) {
