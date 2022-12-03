@@ -1,8 +1,16 @@
 <?php
 
 
-
+/**
+ * Requires for production
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/server/globalIncludes.php');
+
+/**
+ * Requires for development
+ */
+// require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
+
 
 class RESTful {
     public $returnObj = [];

@@ -9,6 +9,7 @@ import Movies from './components/pages/Movies';
 import Theatres from './components/pages/Theatres';
 import NavBar  from "./components/navbar/NavBar";
 import Seats from './components/pages/Seats';
+import Showtimes from './components/pages/Showtimes';
 import { UserAuthContextProvider } from './components/authentication/UserAuthContext';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/theatres" element={<Theatres />} />
           <Route path="/seats" element={<Seats />} />
+          <Route path="/showtimes" element={<Showtimes />} />
         </Routes>
       </UserAuthContextProvider>
     </div>

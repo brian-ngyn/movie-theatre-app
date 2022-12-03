@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 import axios from "axios";
 import { useUserAuth } from "../authentication/UserAuthContext";
@@ -11,6 +11,8 @@ const theme = createTheme();
 const Threatres = () => {
   const { user } = useUserAuth();
   const [theatres, setTheatres] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const getTheatres = () => {
     axios
@@ -24,17 +26,15 @@ const Threatres = () => {
     getTheatres();
   }, []);
 
-  useEffect(() => {
-    console.log(theatres);
-  }, [theatres]);
+  // useEffect(() => {
+  //   console.log(theatres);
+  // }, [theatres]);
 
-  const theatreMovies = (event, theatre_id) => {
-    //TODO: this needs to navigate to movies for the specific theatre
-    console.log(event.target);
-
-    console.log(theatre_id);
-
-    console.log("Image Clicked");
+  const theatreClick = (event, theatre_id, theatre_name) => {
+    navigate('/movies', {state: {
+      theatre_id: theatre_id, 
+      theatre_name: theatre_name
+    }});
   };
 
   const theatreList = theatres.map((theatre) => {
@@ -42,7 +42,7 @@ const Threatres = () => {
       <div className="p-5">
         <h2
           className="text-2xl hover:underline"
-          onClick={(event) => theatreMovies(event, theatre.theatre_id)}
+          onClick={(event) => theatreClick(event, theatre.theatre_id, theatre.theatre_name)}
         >
           {theatre.theatre_name}
         </h2>
