@@ -24,9 +24,10 @@ export function UserAuthContextProvider({children}) {
           cvc: cvc,
           expirydate: expirydate
       }).then((response) => {
+        user_details.id = response.data.body.lastinsertId
         setUser(user_details);
-        setUser(prev => ({...prev, id: response.data.body.lastinsertId}));
-        setLocalStorage(response.data.body);
+        // setUser(prev => ({...prev, id: response.data.body.lastinsertId}));
+        setLocalStorage(user_details);
       });
     };
 
@@ -36,8 +37,8 @@ export function UserAuthContextProvider({children}) {
         password: password
       }).then((response) => {
         console.log(response);
-        setUser(response.data.body);
-        setLocalStorage(response.data.body);
+        setUser(response.data.body[0]);
+        setLocalStorage(response.data.body[0]);
       });
     }
 
@@ -51,7 +52,8 @@ export function UserAuthContextProvider({children}) {
     }
 
     function logout(){
-      setUser({});
+      localStorage.removeItem("session");
+      setUser(null);
     }
 
     useEffect(() => {

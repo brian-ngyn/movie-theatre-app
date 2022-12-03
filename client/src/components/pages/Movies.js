@@ -42,6 +42,7 @@ const Movies = () => {
       <div className="p-5">
         <img
           src={movie.movie_image}
+          alt=""
           className="w-52 h-72 hover:w-56 hover:h-80"
           onClick={(event) => movieShowtimes(event, movie.movie_id)}
         />
