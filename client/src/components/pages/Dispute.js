@@ -33,12 +33,10 @@ export default function Dispute() {
 
   useEffect(() => {
     console.log(user);
-  }, [])
+  });
   
-
   return (
     <ThemeProvider theme={theme}>
-      <NavBar/>
       <KoolContainer>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -56,20 +54,23 @@ export default function Dispute() {
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                autoFocus
+                className='bg-white rounded-lg'
               />
               <TextField
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 id="ticketid"
                 label="Ticket ID#"
                 name="ticketid"
+                className='bg-white rounded-lg'
               />
               <Button
                 type="submit"
