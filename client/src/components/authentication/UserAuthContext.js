@@ -37,8 +37,13 @@ export function UserAuthContextProvider({children}) {
         password: password
       }).then((response) => {
         console.log(response);
-        setUser(response.data.body[0]);
-        setLocalStorage(response.data.body[0]);
+        if (response.data.body.length > 0) {
+          setUser(response.data.body[0]);
+          setLocalStorage(response.data.body[0]);
+          return true;
+        } else {
+          return false;
+        }
       });
     }
 

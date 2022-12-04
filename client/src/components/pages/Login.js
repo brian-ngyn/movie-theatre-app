@@ -21,13 +21,16 @@ const theme = createTheme();
 
 export default function Login() {
   const { user, login } = useUserAuth();
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    login(data.get('email'), data.get('password'));
-    navigate("/");
+    setInvalidLogin(!login(data.get('email'), data.get('password')));
+    if (invalidLogin) {
+      navigate("/");
+    }
   };
 
   return (
@@ -49,9 +52,11 @@ export default function Login() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
+            
             <Typography component="h1" variant="h5" >
               Movie Theatre Sign In
             </Typography>
+            {invalidLogin && <p className="text-red-500">Invalid username or password</p>}
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"

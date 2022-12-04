@@ -3,12 +3,13 @@ import {Form, Button, Input, Select, Card, InputNumber, message} from 'antd';
 import {useState} from "react";
 import KoolContainer from "../KoolContainer/KoolContainer";
 import {Typography} from "@material-tailwind/react";
-
+import { useUserAuth } from '../authentication/UserAuthContext';
 
 
 
 const Checkout = () => {
-    const [user, setUser] = useState({
+    const { user } = useUserAuth();
+    const [guestUser, setGuestUser] = useState({
         name: '',
         email: '',
         cardnumber: '',
@@ -27,8 +28,6 @@ const Checkout = () => {
             cvv: data.get('cvv'),
         });
 
-        // save the user's information locally in the browser
-        localStorage.setItem('user', JSON.stringify(user));
         // redirect to the another page is yet to made, just send to home page for now
         window.location.href = '/';
         // show a success message
@@ -36,15 +35,8 @@ const Checkout = () => {
 
     };
 
-
-
-    const handleCancel = (e) => {
-        e.preventDefault();
-        window.location.href = '/seats';
-    }
-
-    return (
-        <KoolContainer>
+    const showFormGuest = () => {
+        return (
             <Form onSubmit={handleSubmit}>
                 <Typography color="blue-gray" size="4xl" style={{textAlign: "center",fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000", padding:20 }}>Checkout</Typography>
 
@@ -58,8 +50,8 @@ const Checkout = () => {
                         name="name"
                         type="text"
                         placeholder="Name"
-                        value={user.name}
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
+                        value={guestUser.name}
+                        onChange={(e) => setGuestUser({ ...guestUser, name: e.target.value })}
                         required
                     />
                 </Form.Item>
@@ -70,8 +62,8 @@ const Checkout = () => {
                         name="email"
                         type="email"
                         placeholder="Email"
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
+                        value={guestUser.email}
+                        onChange={(e) => setGuestUser({ ...guestUser, email: e.target.value })}
                         required
                     />
                 </Form.Item>
@@ -83,8 +75,8 @@ const Checkout = () => {
                         name="cardnumber"
                         type="text"
                         placeholder="Card Number"
-                        value={user.cardnumber}
-                        onChange={(e) => setUser({ ...user, cardnumber: e.target.value })}
+                        value={guestUser.cardnumber}
+                        onChange={(e) => setGuestUser({ ...guestUser, cardnumber: e.target.value })}
                         required
                     />
                 </Form.Item>
@@ -95,8 +87,8 @@ const Checkout = () => {
                         name="expirationdate"
                         type="text"
                         placeholder="Expiration Date"
-                        value={user.expirationdate}
-                        onChange={(e) => setUser({ ...user, expirationdate: e.target.value })}
+                        value={guestUser.expirationdate}
+                        onChange={(e) => setGuestUser({ ...guestUser, expirationdate: e.target.value })}
                         required
                     />
                 </Form.Item>
@@ -107,8 +99,8 @@ const Checkout = () => {
                         name="cvc"
                         type="text"
                         placeholder="CVC"
-                        value={user.cvv}
-                        onChange={(e) => setUser({ ...user, cvv: e.target.value })}
+                        value={guestUser.cvv}
+                        onChange={(e) => setGuestUser({ ...guestUser, cvv: e.target.value })}
                         required
                     />
 
@@ -122,9 +114,26 @@ const Checkout = () => {
                     </Button>
 
                 </Form.Item>
-
-
             </Form>
+        );
+    }
+
+    const showFormRegistered = () => {
+        return (<p>hi</p>);
+    }
+
+    const checkifLoggedIn = () => {
+
+    };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        window.location.href = '/seats';
+    }
+
+    return (
+        <KoolContainer>
+            {user ? showFormRegistered() : showFormGuest()}
         </KoolContainer>
     );
 };
