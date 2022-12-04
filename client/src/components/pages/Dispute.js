@@ -35,7 +35,6 @@ export default function Dispute() {
     // send a get request to the server with the order id and email
     // if the order id and email match, then send the user to the dispute page
     // if the order id and email do not match, then send the user to the error page
-
   };
 
   useEffect(() => {

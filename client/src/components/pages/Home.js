@@ -30,12 +30,12 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center h-full">
           {isLoggedIn ? (
             <div>
-              <h1 className="text-6xl">Welcome back, {user.fullname}</h1>
+              <h1 className="text-6xl">Welcome back to KoolTickets, {user.fullname}</h1>
               {/* {ticketList} */}
             </div>
           ) : (
             <div>
-              <h1 className="text-6xl">Welcome!</h1>
+              <h1 className="text-6xl">Welcome to KoolTickets!</h1>
               <h1 className="text-4xl mt-8">Please <Link to="/login" className="underline">Sign in</Link> or continue as guest from the <Link to="/theatres" className="underline">theatre tab</Link></h1> </div>
           )}
         </div>

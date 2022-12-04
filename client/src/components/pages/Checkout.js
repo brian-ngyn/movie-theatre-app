@@ -12,6 +12,8 @@ const Checkout = () => {
     const { user } = useUserAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const [paid, setPaid] = useState(false);
+    const [paymentResponse, setPaymentResponse] = useState(null);
 
     const [guestUser, setGuestUser] = useState({
         name: '',
@@ -26,15 +28,15 @@ const Checkout = () => {
             <Form onFinish={handleSubmitGuest}>
                 <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
                 <Typography
-                    Typography color="blue-gray" 
-                    size="2xl" style={{ 
-                        textAlign: "center", 
-                        fontSize: 24, 
-                        fontWeight: "700", 
-                        textShadow: "2px 2px 4px #000000" 
+                    Typography color="blue-gray"
+                    size="2xl" style={{
+                        textAlign: "center",
+                        fontSize: 24,
+                        fontWeight: "700",
+                        textShadow: "2px 2px 4px #000000"
                     }}
                 >
-                Personal Information
+                    Personal Information
                 </Typography>
 
                 <Form.Item style={{ textAlign: "left", paddingLeft: 25, paddingRight: 25 }}>
@@ -111,53 +113,53 @@ const Checkout = () => {
         );
     }
 
-    
+
     const showFormRegistered = () => {
         return (
             <Form onFinish={handleSubmitRegisteredUser}>
                 <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
                 <Typography
-                    Typography color="blue-gray" 
-                    size="2xl" style={{ 
-                        textAlign: "center", 
-                        fontSize: 24, 
-                        fontWeight: "700", 
-                        textShadow: "2px 2px 4px #000000" 
+                    Typography color="blue-gray"
+                    size="2xl" style={{
+                        textAlign: "center",
+                        fontSize: 24,
+                        fontWeight: "700",
+                        textShadow: "2px 2px 4px #000000"
                     }}
-                    >
-                Personal Information
+                >
+                    Personal Information
                 </Typography>
-                <br/>
+                <br />
                 <Typography
-                    Typography color="blue-gray" 
-                    size="xl" style={{ 
-                        textAlign: "left", 
-                        fontSize: 16, 
-                        fontWeight: "700", 
-                        textShadow: "2px 2px 4px #000000" 
+                    Typography color="blue-gray"
+                    size="xl" style={{
+                        textAlign: "left",
+                        fontSize: 16,
+                        fontWeight: "700",
+                        textShadow: "2px 2px 4px #000000"
                     }}
-                    >
-                Using saved information from profile
+                >
+                    Using saved information from profile
                 </Typography>
                 <Typography
-                    Typography color="blue-gray" 
-                    size="xl" style={{ 
-                        textAlign: "left", 
+                    Typography color="blue-gray"
+                    size="xl" style={{
+                        textAlign: "left",
                         paddingleft: 25,
-                        fontSize: 16, 
-                        textShadow: "2px 2px 4px #000000" 
+                        fontSize: 16,
+                        textShadow: "2px 2px 4px #000000"
                     }}
-                    >
-                Name - {user.fullname}
-                <br/>
-                Email - {user.email}
-                <br/>
-                <br/>
-                Credit Card - ending in {user.creditcardnumber.slice(-4)}
-                <br/>
-                Expiry Date - {user.expirydate}
+                >
+                    Name - {user.fullname}
+                    <br />
+                    Email - {user.email}
+                    <br />
+                    <br />
+                    Credit Card - ending in {user.creditcardnumber.slice(-4)}
+                    <br />
+                    Expiry Date - {user.expirydate}
                 </Typography>
-                <br/>
+                <br />
                 <Form.Item style={{ textAlign: "center", paddingLeft: 25, paddingRight: 25 }}>
                     <Button type="default" htmlType="submit" style={{ marginRight: 10 }}>
                         Purchase
@@ -169,18 +171,23 @@ const Checkout = () => {
             </Form>
         );
     }
-    
+
     const handleSubmitGuest = (e) => {
         console.log("guest checkout");
         axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
-            isGuestCheckout: true,
-            email: guestUser.email,
+            isGuestCheckout: 1,
+            user_email: guestUser.email,
             card_number: guestUser.cardnumber,
             expiry_date: guestUser.expirationdate,
             cvc: guestUser.cvv,
-            timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
-            payment_amount: location.state.seats_ids.length * 10
+            payment_amount: location.state.seats_ids.length * 10,
+            seats_ids: location.state.seats_ids,
+            seats_number: location.state.seats_number
         }).then((response) => {
+            if (response.data.status === 200) {
+                setPaid(true);
+                setPaymentResponse(response.data.body);
+            }
             console.log(response);
         });
     };
@@ -188,18 +195,23 @@ const Checkout = () => {
     const handleSubmitRegisteredUser = (e) => {
         console.log("registered user checkout");
         axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
-            isGuestCheckout: false,
-            email: user.email,
+            isGuestCheckout: 0,
+            user_email: user.email,
             card_number: user.creditcardnumber,
             expiry_date: user.expirydate,
             cvc: user.cvc,
-            timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
-            payment_amount: location.state.seats_ids.length * 10
+            payment_amount: location.state.seats_ids.length * 10,
+            seats_ids: location.state.seats_ids,
+            seats_number: location.state.seats_number
         }).then((response) => {
+            if (response.data.status === 200) {
+                setPaid(true);
+                setPaymentResponse(response.data.body);
+            }
             console.log(response);
         });
     };
-    
+
     const handleCancel = (e) => {
         e.preventDefault();
         navigate("/");
@@ -253,7 +265,27 @@ const Checkout = () => {
                 </div>
                 <div className='grid col-span-1'></div>
                 <div className='grid col-span-4'>
-                    {user ? showFormRegistered() : showFormGuest()}
+                    {paid ?
+                        <div>
+                            <Typography
+                                Typography color="blue-gray"
+                                size="2xl" style={{
+                                    textAlign: "center",
+                                    fontSize: 24,
+                                    fontWeight: "700",
+                                    textShadow: "2px 2px 4px #000000"
+                                }}
+                            >
+                                Payment Received
+                            </Typography>
+                            <p>We have recieved your payment succesfully. Please check your email for a copy of your tickets. Your Order ID is: {paymentResponse.lastinsertId}</p>
+                            <p>Thank you for using KoolTickets!</p>
+                            <h4 className='mt-36'>Cancellation Policy:</h4>
+                            <p>You may cancel your ticket 72 hours before the showtime.</p>
+                            <p className='text-red-500'>Please note a 15% cancellation will apply if you are not a registered user. Consider signing up today!</p>
+                        </div>
+                        : user ? showFormRegistered()
+                            : showFormGuest()}
                 </div>
                 <div className='grid col-span-1'></div>
             </div>
