@@ -49,7 +49,7 @@ const Showtimes = () => {
       <div className="p-5">
         <Button
           variant="outlined"
-          onClick={(event) => showtimeClick(event, showtime.show_id, showtime.show_date, showtime.show_start)}
+          onClick={(event) => showtimeClick(event, showtime.showtime_id, showtime.show_date, showtime.show_start)}
         >
           {showtime.show_date} starting at {showtime.show_start}
         </Button>
