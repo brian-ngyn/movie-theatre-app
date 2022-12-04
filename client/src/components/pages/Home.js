@@ -36,7 +36,7 @@ const Home = () => {
           ) : (
             <div>
               <h1 className="text-6xl">Welcome!</h1>
-              <h1 className="text-4xl mt-8">Please <a href="/login" className="underline">Sign in </a>or continue as guest from the <a href="/theatres" className="underline">theatre tab</a></h1> </div>
+              <h1 className="text-4xl mt-8">Please <Link to="/login" className="underline">Sign in</Link> or continue as guest from the <Link to="/theatres" className="underline">theatre tab</Link></h1> </div>
           )}
         </div>
       </KoolContainer>
