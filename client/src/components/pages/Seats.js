@@ -76,7 +76,7 @@ export default function Seats() {
   }
 
   const addAmount = () => {
-    if (ticketAmount < presaleAvailable && ticketAmount < seats.filter((seat) => seat.seat_status == 0).length) {
+    if ((!presaleMode && ticketAmount < seats.filter((seat) => seat.seat_status == 0).length) || (presaleMode && ticketAmount < presaleAvailable)) {
       setTicketAmount(ticketAmount + 1);
     }
   }
@@ -128,17 +128,18 @@ export default function Seats() {
                   </div>
                 ))}
               </div>
-              <div className='grid m-auto w-4/5 mt-4'>
-                <div className='grid text-black h-ful w-full justify-center items-center'>
-                  <div className='text-black m-auto w-full border p-3'>
-                    {presaleMode ? (
-                      <p className='text-red-500'>Only {presaleAvailable} ticket(s) left in presale!</p>)
-                      : !presaleAvailable ?
-                        <p className='text-red-500'>No tickets left in presale</p>
-                        : null}
+              {presaleMode &&
+                <div className='grid m-auto w-4/5 mt-4'>
+                  <div className='grid text-black h-ful w-full justify-center items-center'>
+                    <div className='text-black m-auto w-full border p-3'>
+                      {presaleAvailable ? (
+                        <p className='text-red-500'>Only {presaleAvailable} ticket(s) left in presale!</p>)
+                        : <p className='text-red-500'>No tickets left in presale</p>
+                      }
+                    </div>
                   </div>
                 </div>
-              </div>
+              }
             </div>
           </div>
           <div className='grid h-full col-span-6'>
