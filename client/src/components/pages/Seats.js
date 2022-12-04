@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,6 +16,7 @@ import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const theme = createTheme();
 
@@ -59,6 +60,19 @@ export default function Seats() {
   const [presaleMode, setPresaleMode] = useState(false);
   const [presaleAvailable, setPresaleAvailable] = useState(0);
 
+  // LOADING FUNCTION
+
+  useEffect(() => {
+    console.log("showtime selected from previous page:", location.state.showtime_id);
+    axios.get("http://35.183.16.214/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
+      .then((response) => {
+        console.log("Seats response:", response.data);
+        //setShowtimes(response.data.body);
+      });
+  }, []);
+
+
+  // UPDATING FUNCTIONS
   const selectSeat = (id) => {
     if (!selectedSeats.find((seat) => seat === id) && ticketAmount) {
       const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
@@ -74,16 +88,18 @@ export default function Seats() {
   }
 
   const confirmClick = () => {
-  console.log("showtime id ",location.showtime_id);
+    console.log("showtime id ", location.showtime_id);
     console.log("date ", location.showtime_date);
     console.log("starting at ", location.showtime_start);
 
-    navigate('/checkout', {state: {
-      theatre_id: location.state.theatre_id,
-      movie_id: location.state.movie_id,
-      showtime_id: location.state.showtime_id,
-      seats_ids: selectedSeats,
-    }});
+    navigate('/checkout', {
+      state: {
+        theatre_id: location.state.theatre_id,
+        movie_id: location.state.movie_id,
+        showtime_id: location.state.showtime_id,
+        seats_ids: selectedSeats,
+      }
+    });
   };
 
   return (
