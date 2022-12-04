@@ -76,7 +76,7 @@ export default function Seats() {
   }
 
   const addAmount = () => {
-    if (ticketAmount < presaleAvailable && ticketAmount < seats.filter((seat) => seat.seat_status == 0).length) {
+    if ((!presaleMode && ticketAmount < seats.filter((seat) => seat.seat_status == 0).length) || (presaleMode && ticketAmount < presaleAvailable)) {
       setTicketAmount(ticketAmount + 1);
     }
   }
