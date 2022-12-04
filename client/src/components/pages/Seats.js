@@ -28,29 +28,6 @@ export default function Seats() {
 
   const [seats, setSeats] = useState([
     { id: 1, seat: "A1", status: "available" },
-    { id: 2, seat: "A2", status: "available" },
-    { id: 3, seat: "A3", status: "available" },
-    { id: 4, seat: "A4", status: "available" },
-    { id: 5, seat: "A5", status: "available" },
-    { id: 6, seat: "A6", status: "available" },
-    { id: 7, seat: "A7", status: "available" },
-    { id: 8, seat: "A8", status: "available" },
-    { id: 9, seat: "A9", status: "available" },
-    { id: 10, seat: "A10", status: "available" },
-    { id: 11, seat: "A11", status: "available" },
-    { id: 12, seat: "A12", status: "available" },
-    { id: 13, seat: "A13", status: "available" },
-    { id: 14, seat: "A14", status: "available" },
-    { id: 15, seat: "A15", status: "available" },
-    { id: 16, seat: "A16", status: "available" },
-    { id: 17, seat: "A17", status: "available" },
-    { id: 18, seat: "A18", status: "available" },
-    { id: 19, seat: "A19", status: "available" },
-    { id: 20, seat: "B1", status: "available" },
-    { id: 21, seat: "B2", status: "available" },
-    { id: 22, seat: "B3", status: "available" },
-    { id: 23, seat: "B4", status: "available" },
-    { id: 24, seat: "B5", status: "available" },
 
   ]);
 
