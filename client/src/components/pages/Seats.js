@@ -103,10 +103,10 @@ export default function Seats() {
       <KoolContainer>
         <div className='grid h-full grid-cols-11'>
           <div className='grid h-full col-span-2 '>
-            <div className='bg-white opacity-75 h-full w-full text-black'>
+            <div className='bg-white opacity-75 h-full w-full text-black '>
               <h2 className='text-red-500 mt-3 text-2xl'>{presaleMode ? "*Presale*" : null}</h2>
               <h2 className='text-black mt-3 text-2xl'>Tickets</h2>
-              <div className='border-black border rounded-2xl w-4/5 h-10 grid grid-cols-3 m-auto mt-4 justify-center items-center'>
+              <div className='border-black border rounded-2xl w-4/5 h-1/12 grid grid-cols-3 m-auto mt-4 justify-center items-center '>
                 <div className='grid text-black h-full border-black border rounded-l-2xl justify-center items-center' onClick={addAmount}>
                   +
                 </div>
@@ -117,7 +117,7 @@ export default function Seats() {
                   -
                 </div>
               </div>
-              <div className='rounded-2xl w-4/5 h-10 grid grid-cols-1 m-auto mt-4 justify-center items-center'>
+              <div className='rounded-2xl w-4/5 h-11/12 grid grid-cols-1 m-auto mt-4 justify-center items-center'>
                 {selectedSeats.map((seatId, index) => (
                   <div className='grid m-auto w-4/5 mt-4'>
                     <div className='grid text-black h-ful w-full justify-center items-center'>

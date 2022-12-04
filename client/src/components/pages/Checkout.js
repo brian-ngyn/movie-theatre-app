@@ -27,8 +27,6 @@ const Checkout = () => {
             cvv: data.get('cvv'),
         });
 
-        // save the user's information locally in the browser
-        localStorage.setItem('user', JSON.stringify(user));
         // redirect to the another page is yet to made, just send to home page for now
         window.location.href = '/';
         // show a success message
@@ -128,8 +126,5 @@ const Checkout = () => {
         </KoolContainer>
     );
 };
-
-
-
 
 export default Checkout;
