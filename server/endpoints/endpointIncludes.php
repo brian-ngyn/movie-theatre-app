@@ -1,9 +1,18 @@
 <?php
 
 
-
+/**
+ * Requires for development
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/server/globalIncludes.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/server/classes/RESTful.php');
+
+/**
+ * Requires for production
+ */
+// require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
+// require_once($_SERVER['DOCUMENT_ROOT'].'/classes/RESTful.php');
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
