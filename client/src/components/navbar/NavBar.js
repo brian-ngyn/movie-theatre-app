@@ -53,7 +53,7 @@ export default function Example() {
           className="p-1 font-normal"
         >
           <Link to="/dispute" className="flex items-center">
-            Dispute Ticket
+            Cancel Order
           </Link>
         </Typography>
       </ul>
