@@ -26,6 +26,10 @@ jobs:
       with:
         node-version: 13.x
       
+    - name: Change
+      run: | 
+            cd client
+            
     - name: Install NPM packages
       run: npm ci
     
