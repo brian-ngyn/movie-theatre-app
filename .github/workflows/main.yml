@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: production-files
-        path: ../build
+        path: ./build
   
   deploy:
     name: Deploy
