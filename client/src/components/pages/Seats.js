@@ -63,12 +63,18 @@ export default function Seats() {
   // LOADING FUNCTION
 
   useEffect(() => {
+
+    // GET SEATS
     console.log("showtime selected from previous page:", location.state.showtime_id);
     axios.get("http://35.183.16.214/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
       .then((response) => {
         console.log("Seats response:", response.data);
-        //setShowtimes(response.data.body);
+        setSeats(response.data.body);
       });
+
+    // GET PRESALE STATUS
+
+
   }, []);
 
 
