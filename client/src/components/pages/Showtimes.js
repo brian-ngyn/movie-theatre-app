@@ -17,7 +17,7 @@ const Showtimes = () => {
 
   const getShowtimes = (movie_id) => {
     console.log("movie selected from previous page:", movie_id);
-    axios.get("http://35.183.16.214/server/endpoints/get/showtimes.php?movie_id=" + movie_id)
+    axios.get("http://localhost:3001/server/endpoints/get/showtimes.php?movie_id=" + movie_id)
     .then((response) => {
       setShowtimes(response.data.body);
     });

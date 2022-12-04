@@ -52,7 +52,7 @@ export default function Example() {
           color="blue-gray"
           className="p-1 font-normal"
         >
-          <Link to="/dispute" className="flex items-center">
+          <Link to="/cancelorder" className="flex items-center">
             Cancel Order
           </Link>
         </Typography>
@@ -86,14 +86,14 @@ export default function Example() {
         >
           <span>Login/Register</span>
         </Button>
-        <Button
+        {user && (<Button
           variant="gradient"
           size="sm"
           onClick={logoutUser}
           className="hiddben lg:inline-lock"
         >
           <span>Logout</span>
-        </Button>
+        </Button>)}
       </div>
     </Navbar>
   );

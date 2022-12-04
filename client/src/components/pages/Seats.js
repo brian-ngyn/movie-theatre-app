@@ -42,7 +42,7 @@ export default function Seats() {
 
     // GET SEATS
     console.log("showtime selected from previous page:", location.state.showtime_id);
-    axios.get("http://35.183.16.214/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
+    axios.get("http://localhost:3001/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
       .then((response) => {
         console.log(response.data.body);
         setSeats(response.data.body);

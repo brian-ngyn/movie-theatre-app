@@ -16,26 +16,29 @@ import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const theme = createTheme();
 
 export default function Login() {
   const { user, login } = useUserAuth();
-  const [invalidLogin, setInvalidLogin] = React.useState(false);
+  const [invalidLogin, setInvalidLogin] = React.useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     setInvalidLogin(!login(data.get('email'), data.get('password')));
-    if (invalidLogin) {
-      navigate("/");
-    }
   };
+  
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
-      
       <KoolContainer>
         <div >
         <Container component="main" maxWidth="xs">
@@ -56,7 +59,7 @@ export default function Login() {
             <Typography component="h1" variant="h5" >
               Movie Theatre Sign In
             </Typography>
-            {invalidLogin && <p className="text-red-500">Invalid username or password</p>}
+            {invalidLogin && user && <p className="text-red-500">Invalid username or password</p>}
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"

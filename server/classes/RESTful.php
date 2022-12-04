@@ -2,12 +2,12 @@
 
 
 /**
- * Requires for production
+ * Requires for development
  */
 require_once($_SERVER['DOCUMENT_ROOT'].'/server/globalIncludes.php');
 
 /**
- * Requires for development
+ * Requires for production
  */
 // require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
 

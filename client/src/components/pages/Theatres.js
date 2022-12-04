@@ -16,7 +16,7 @@ const Threatres = () => {
 
   const getTheatres = () => {
     axios
-      .get("http://35.183.16.214/server/endpoints/list/theaters.php")
+      .get("http://localhost:3001/server/endpoints/list/theaters.php")
       .then((response) => {
         setTheatres(response.data.body);
       });

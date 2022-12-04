@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
-import Dispute from './components/pages/Dispute';
+import CancelOrder from './components/pages/CancelOrder';
 import Movies from './components/pages/Movies';
 import Theatres from './components/pages/Theatres';
 import NavBar  from "./components/navbar/NavBar";
@@ -22,7 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dispute" element={<Dispute />} />
+            <Route path="/cancelorder" element={<CancelOrder />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/theatres" element={<Theatres />} />
             <Route path="/seats" element={<Seats />} />

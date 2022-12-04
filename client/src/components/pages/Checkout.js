@@ -174,7 +174,7 @@ const Checkout = () => {
 
     const handleSubmitGuest = (e) => {
         console.log("guest checkout");
-        axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
+        axios.post("http://localhost:3001/server/endpoints/post/checkout.php", {
             isGuestCheckout: 1,
             user_email: guestUser.email,
             card_number: guestUser.cardnumber,
@@ -194,7 +194,7 @@ const Checkout = () => {
 
     const handleSubmitRegisteredUser = (e) => {
         console.log("registered user checkout");
-        axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
+        axios.post("http://localhost:3001/server/endpoints/post/checkout.php", {
             isGuestCheckout: 0,
             user_email: user.email,
             card_number: user.creditcardnumber,
