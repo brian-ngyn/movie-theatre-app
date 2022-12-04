@@ -61,8 +61,7 @@ export default function Example() {
 
   return (
     <Navbar
-      class="shadow-2xl"
-      className="bg-zinc-700 bg-cover absolute py-4 px-4 lg:px-8 lg:py-10 text-white text-xl"
+      className="bg-zinc-700 bg-cover absolute py-4 px-4 lg:px-8 lg:py-10 text-white text-xl shadow-2xl"
     >
       <div className="container mx-auto flex items-center justify-end">
         <img

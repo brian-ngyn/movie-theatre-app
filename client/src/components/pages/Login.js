@@ -78,7 +78,6 @@ export default function Login() {
                 type="password"
                 id="password"
                 color='secondary'
-                fontColor='green'
                 className='bg-white rounded-lg'
               />
               <Button

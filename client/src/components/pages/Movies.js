@@ -52,13 +52,13 @@ const Movies = () => {
     }
   }
 
-  const movieList = movies.map((movie) => {
+  const movieList = movies.map((movie, index) => {
     // if the user is signed in, show all movies
     // else, if the user is not signed in, then only show movies where TODAY > public date
 
     if (user != null){
       return (
-        <div className="p-5">
+        <div key={index} className="p-5">
           <img
             src={movie.movie_image}
             alt=""
@@ -67,7 +67,7 @@ const Movies = () => {
           />
           <h2 className="">{movie.movie_title}</h2>
           <p>{movie.movie_duration}</p>
-          <p>{presaleCheck(movie.public_date)}</p>
+          {presaleCheck(movie.public_date)}
         </div>
       );
     } else {

@@ -133,7 +133,7 @@ export default function Seats() {
               </div>
               <div className='rounded-2xl w-4/5 h-11/12 grid grid-cols-1 m-auto mt-4 justify-center items-center'>
                 {selectedSeats.map((seatId, index) => (
-                  <div className='grid m-auto w-4/5 mt-4'>
+                  <div key={index} className='grid m-auto w-4/5 mt-4'>
                     <div className='grid text-black h-ful w-full justify-center items-center'>
                       <div className='text-black m-auto w-full border p-3'>
                         Ticket #{index + 1}: {seats.filter((seat) => seat.id == seatId)[0].seat}

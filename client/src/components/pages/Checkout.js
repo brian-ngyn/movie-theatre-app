@@ -28,7 +28,7 @@ const Checkout = () => {
             <Form onFinish={handleSubmitGuest}>
                 <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
                 <Typography
-                    Typography color="blue-gray"
+                    color="blue-gray"
                     size="2xl" style={{
                         textAlign: "center",
                         fontSize: 24,
@@ -119,7 +119,7 @@ const Checkout = () => {
             <Form onFinish={handleSubmitRegisteredUser}>
                 <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
                 <Typography
-                    Typography color="blue-gray"
+                     color="blue-gray"
                     size="2xl" style={{
                         textAlign: "center",
                         fontSize: 24,
@@ -131,7 +131,7 @@ const Checkout = () => {
                 </Typography>
                 <br />
                 <Typography
-                    Typography color="blue-gray"
+                     color="blue-gray"
                     size="xl" style={{
                         textAlign: "left",
                         fontSize: 16,
@@ -142,7 +142,7 @@ const Checkout = () => {
                     Using saved information from profile
                 </Typography>
                 <Typography
-                    Typography color="blue-gray"
+                     color="blue-gray"
                     size="xl" style={{
                         textAlign: "left",
                         paddingleft: 25,
@@ -239,8 +239,8 @@ const Checkout = () => {
                         <div className='grid col-span-2 w-4/5'>
                             <div>
                                 <div className="flex flex-col space-y-3 h-3/4">
-                                    {location.state.seats_number.map((seat) => (
-                                        <div className='grid grid-cols-5'>
+                                    {location.state.seats_number.map((seat, index) => (
+                                        <div key={index} className='grid grid-cols-5'>
                                             <div className='grid col-span-3 border border-block rounded-xl w-full m-auto'>
                                                 <p>{seat}</p>
                                             </div>
@@ -268,7 +268,7 @@ const Checkout = () => {
                     {paid ?
                         <div>
                             <Typography
-                                Typography color="blue-gray"
+                             color="blue-gray"
                                 size="2xl" style={{
                                     textAlign: "center",
                                     fontSize: 24,

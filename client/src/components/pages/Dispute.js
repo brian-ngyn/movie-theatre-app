@@ -23,14 +23,14 @@ const theme = createTheme();
 export default function Dispute() {
   const { user } = useUserAuth();
   const [displayInformation, setDisplayInformation] = React.useState([]);
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     axios.get("http://35.183.16.214/server/endpoints/get/cancelticket.php?user_email=" + data.get('email') + "&payment_id=" + data.get('orderid'))
       .then((response) => {
-        if (response.data.status === 200) {
+        if (response.data.body.length > 0) {
           setDisplayInformation(response.data.body);
           setIsSubmitted(true);
         }
@@ -75,7 +75,7 @@ export default function Dispute() {
   return (
     <ThemeProvider theme={theme}>
       <KoolContainer>
-        {!isSubmitted ? (
+        {isSubmitted === 0 ? (
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -141,7 +141,7 @@ export default function Dispute() {
               <div>
                 <div className="flex flex-col space-y-3 h-3/4 w-3/5 m-auto">
                   {displayInformation.map((seat) => (
-                    <div className='grid grid-cols-5'>
+                    <div key={seat.seat_id} className='grid grid-cols-5'>
                       <div className='grid col-span-3 border border-block rounded-xl w-full m-auto'>
                         <p>{seat.seat_number}</p>
                       </div>

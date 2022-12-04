@@ -49,9 +49,9 @@ const Showtimes = () => {
     }});
   };
 
-  const showtimesList = showtimes.map((showtime) => {
+  const showtimesList = showtimes.map((showtime, index) => {
     return (
-      <div className="p-5">
+      <div key={index} className="p-5">
         <Button
           variant="outlined"
           onClick={(event) => showtimeClick(event, showtime.showtime_id, showtime.show_date, showtime.show_start)}

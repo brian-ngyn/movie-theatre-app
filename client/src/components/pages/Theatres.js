@@ -37,9 +37,9 @@ const Threatres = () => {
     }});
   };
 
-  const theatreList = theatres.map((theatre) => {
+  const theatreList = theatres.map((theatre, index) => {
     return (
-      <div className="p-5">
+      <div key={index} className="p-5">
         <h2
           className="text-2xl hover:underline"
           onClick={(event) => theatreClick(event, theatre.theatre_id, theatre.theatre_name)}
