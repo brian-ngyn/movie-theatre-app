@@ -2,13 +2,22 @@
 
 require_once("CancelStrategy.php");
 
+/**
+ * Concrete strategy class that uses the Strategy interface to implement the cancellation of an order for a registered user.
+ */
 class CancelRegisteredUser implements CancelStrategy
 {
+    /**
+     * Cancels the order
+     * @param $order - The order to be cancelled
+     * @return void
+     * @throws Exception - If the order is not found
+     */
     public function cancel($order)
     {
-        $displayInformation = $order['displayInformation'];
-        $payment_id = $displayInformation[0]['payment_id'];
-        $user_email = $displayInformation[0]['user_email'];
+        $displayInformation = $order['displayInformation']; // Get the display information
+        $payment_id = $displayInformation[0]['payment_id']; // Get the payment id
+        $user_email = $displayInformation[0]['user_email']; // Get the user email
 
         // Check if registered user still has a valid subscription
         $sql = "SELECT * FROM RegisteredUsers INNER JOIN Payment ON Payment.user_email = RegisteredUsers.email WHERE Payment.payment_id = '$payment_id'";
@@ -33,10 +42,10 @@ class CancelRegisteredUser implements CancelStrategy
         // Refund full amount
         $refund_amount = count($displayInformation) * 10;
 
-        $sql = "UPDATE Payment SET refunded = $refund_amount WHERE payment_id = '$payment_id'";
-        $result = DBConnection::getInstance()->query($sql);
+        $sql = "UPDATE Payment SET refunded = $refund_amount WHERE payment_id = '$payment_id'"; // Update the payment table to reflect the refund
+        $result = DBConnection::getInstance()->query($sql); // Execute the query
 
-        $seats_numbers_formatted = implode(", ", array_column($displayInformation, 'seat_number'));
+        $seats_numbers_formatted = implode(", ", array_column($displayInformation, 'seat_number')); // Get the seat numbers in a comma separated list
         $refund_percentage = "100%";
 
         echo json_encode((object) ["body" => (object) ["refundAmount" => $refund_amount], "status" => 200]);
