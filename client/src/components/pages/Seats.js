@@ -27,7 +27,7 @@ export default function Seats() {
   const navigate = useNavigate();
 
   const [seats, setSeats] = useState([
-    { id: 1, seat: "A1", status: "available" },
+
 
   ]);
 
@@ -41,11 +41,12 @@ export default function Seats() {
 
   useEffect(() => {
 
+
     // GET SEATS
     console.log("showtime selected from previous page:", location.state.showtime_id);
     axios.get("http://35.183.16.214/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
       .then((response) => {
-        console.log("Seats response:", response.data);
+        console.log("Seats response:", response.data.body);
         setSeats(response.data.body);
       });
 
@@ -55,9 +56,11 @@ export default function Seats() {
   }, []);
 
 
+
   // UPDATING FUNCTIONS
   const selectSeat = (id) => {
     if (!selectedSeats.find((seat) => seat === id) && ticketAmount) {
+      console.log("seat selected:", id);
       const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
       setSelectedSeats([...reducedSeats, id]);
     }
