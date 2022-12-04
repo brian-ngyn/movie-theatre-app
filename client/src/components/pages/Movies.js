@@ -5,6 +5,7 @@ import axios from "axios";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import KoolContainer from "../KoolContainer/KoolContainer";
+import moment from "moment";
 
 const theme = createTheme();
 
@@ -13,6 +14,7 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const today = moment().format("YYYY-MM-DD");
 
   const getMovies = (theatre_id) => {
     console.log("theatre selected from previous page:", theatre_id);
@@ -41,18 +43,38 @@ const Movies = () => {
   };
 
   const movieList = movies.map((movie) => {
-    return (
-      <div className="p-5">
-        <img
-          src={movie.movie_image}
-          alt=""
-          className="w-52 h-72 hover:w-56 hover:h-80"
-          onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date)}
-        />
-        <h2 className="">{movie.movie_title}</h2>
-        <p>{movie.movie_duration}</p>
-      </div>
-    );
+    // if the user is signed in, show all movies
+    // else, if the user is not signed in, then only show movies where TODAY > public date
+
+    if (user != null){
+      return (
+        <div className="p-5">
+          <img
+            src={movie.movie_image}
+            alt=""
+            className="w-52 h-72 hover:w-56 hover:h-80"
+            onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date)}
+          />
+          <h2 className="">{movie.movie_title}</h2>
+          <p>{movie.movie_duration}</p>
+        </div>
+      );
+    } else {
+      if (today > movie.public_date){
+        return (
+          <div className="p-5">
+            <img
+              src={movie.movie_image}
+              alt=""
+              className="w-52 h-72 hover:w-56 hover:h-80"
+              onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date)}
+            />
+            <h2 className="">{movie.movie_title}</h2>
+            <p>{movie.movie_duration}</p>
+          </div>
+        );
+      }
+    }
   });
 
   return (
