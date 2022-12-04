@@ -1,6 +1,6 @@
 <?php
 
-include_once('../endpointIncludes.php');
+require_once('../endpointIncludes.php');
 
 assertRequestMethod('POST');
 
@@ -28,7 +28,7 @@ foreach ($_POST['seats_ids'] as $seat) {
 $sql = "UPDATE Seat SET seat_status = $actor WHERE seat_id IN ($seats_ids_formatted)";
 $result = DBConnection::getInstance()->query($sql);
 
-include_once('./checkoutMail.php');
+require_once('./checkoutMail.php');
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= "From: Movie Theater <ideen.bcc@gmail.com>" . "\r\n";

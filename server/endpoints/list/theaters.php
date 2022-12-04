@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('../endpointIncludes.php');
+require_once('../endpointIncludes.php');
 assertRequestMethod('GET');
 
 $sql = "SELECT * FROM Theatres";

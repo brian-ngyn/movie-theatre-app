@@ -1,6 +1,6 @@
 <?php
 
-include_once('../endpointIncludes.php');
+require_once('../endpointIncludes.php');
 assertRequestMethod('POST');
 
 $_POST = json_decode(file_get_contents("php://input"),true);
