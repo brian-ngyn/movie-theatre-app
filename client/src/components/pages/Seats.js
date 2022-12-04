@@ -15,11 +15,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 
 export default function Seats() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [seats, setSeats] = useState([
     { id: 1, seat: "A1", status: "available" },
@@ -52,6 +56,9 @@ export default function Seats() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [ticketAmount, setTicketAmount] = useState(0);
 
+  const [presaleMode, setPresaleMode] = useState(false);
+  const [presaleAvailable, setPresaleAvailable] = useState(0);
+
   const selectSeat = (id) => {
     if (!selectedSeats.find((seat) => seat === id) && ticketAmount) {
       const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
@@ -65,6 +72,19 @@ export default function Seats() {
       setSelectedSeats([...reducedSeats]);
     }
   }
+
+  const confirmClick = () => {
+  console.log("showtime id ",location.showtime_id);
+    console.log("date ", location.showtime_date);
+    console.log("starting at ", location.showtime_start);
+
+    navigate('/checkout', {state: {
+      theatre_id: location.state.theatre_id,
+      movie_id: location.state.movie_id,
+      showtime_id: location.state.showtime_id,
+      seats_ids: selectedSeats,
+    }});
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -124,7 +144,7 @@ export default function Seats() {
                 </div>
                 : ticketAmount !== 0 ?
                   <div>
-                    <h2 className='text-red mt-3 text-2xl'><Button variant='contained'>Confirm Seat Selection</Button></h2>
+                    <h2 className='text-red mt-3 text-2xl'><Button variant='contained' onClick={confirmClick}>Confirm Seat Selection</Button></h2>
                   </div>
                   :
                   <div>
