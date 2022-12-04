@@ -33,13 +33,14 @@ const Movies = () => {
   //   console.log(movies);
   // }, [movies]);
 
-  const movieClick = (event, movie_id, movie_title, public_date) => {
+  const movieClick = (event, movie_id, movie_title, public_date, movie_image) => {
     navigate('/showtimes', {state: {
       theatre_id: location.state.theatre_id, 
       theatre_name: location.state.theatre_name, 
       movie_id: movie_id,
       movie_title: movie_title,
-      public_date: public_date
+      public_date: public_date,
+      movie_image: movie_image
     }});
   };
 
@@ -62,7 +63,7 @@ const Movies = () => {
             src={movie.movie_image}
             alt=""
             className="w-52 h-72 hover:w-56 hover:h-80"
-            onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date)}
+            onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date, movie.movie_image)}
           />
           <h2 className="">{movie.movie_title}</h2>
           <p>{movie.movie_duration}</p>
@@ -77,7 +78,7 @@ const Movies = () => {
               src={movie.movie_image}
               alt=""
               className="w-52 h-72 hover:w-56 hover:h-80"
-              onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date)}
+              onClick={(event) => movieClick(event, movie.movie_id, movie.movie_title, movie.public_date, movie.movie_image)}
             />
             <h2 className="">{movie.movie_title}</h2>
             <p>{movie.movie_duration}</p>

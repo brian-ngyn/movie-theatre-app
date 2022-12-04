@@ -30,6 +30,7 @@ export default function Seats() {
   const [seats, setSeats] = useState([]);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeatsName, setSelectedSeatsName] = useState([]);
   const [ticketAmount, setTicketAmount] = useState(0);
 
   const [presaleMode, setPresaleMode] = useState(false);
@@ -81,21 +82,34 @@ export default function Seats() {
     }
   }
 
+  useEffect(() => {
+    setSelectedSeatsName(selectedSeats.map((seat) => seats.filter((seat2) => seat2.id === seat)[0].seat));
+  }, [selectedSeats, seats]);
+
   const confirmClick = () => {
-    console.log("showtime id ", location.showtime_id);
-    console.log("date ", location.showtime_date);
-    console.log("starting at ", location.showtime_start);
+    console.log("showtime id ", location.state.showtime_id);
+    console.log("date ", location.state.showtime_date);
+    console.log("starting at ", location.state.showtime_start);
+    console.log("movie image ", location.state.movie_image);
 
     navigate('/checkout', {
       state: {
         theatre_id: location.state.theatre_id,
+        theatre_name: location.state.theatre_name,
+        movie_name: location.state.movie_name,
         movie_id: location.state.movie_id,
+        show_start: location.state.show_start,
+        show_date: location.state.show_date,
         showtime_id: location.state.showtime_id,
         seats_ids: selectedSeats,
+        seats_number: selectedSeatsName,
         public_date: location.state.public_date,
+        movie_image: location.state.movie_image
       }
     });
   };
+
+
 
   return (
     <ThemeProvider theme={theme}>

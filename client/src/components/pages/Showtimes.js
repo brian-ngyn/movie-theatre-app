@@ -31,16 +31,21 @@ const Showtimes = () => {
     console.log(showtimes);
   }, [showtimes]);
 
-  const showtimeClick = (event, showtime_id, showtime_date, showtime_start) => {
+  const showtimeClick = (event, showtime_id, showtime_date, show_start) => {
     console.log("showtime id ",showtime_id);
     console.log("date ", showtime_date);
-    console.log("starting at ", showtime_start);
+    console.log("starting at ", show_start);
 
     navigate('/seats', {state: {
       theatre_id: location.state.theatre_id,
+      theatre_name: location.state.theatre_name,
+      movie_name: location.state.movie_title,
+      show_date: showtime_date,
+      show_start: show_start,
       movie_id: location.state.movie_id,
       public_date: location.state.public_date,
       showtime_id: showtime_id,
+      movie_image: location.state.movie_image
     }});
   };
 
