@@ -27,7 +27,7 @@ export default function Dispute() {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
-      ticketid: data.get('ticketid'),
+      orderid: data.get('orderid'),
     });
   };
 
@@ -49,7 +49,7 @@ export default function Dispute() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Dispute a ticket
+              Cancel an Order
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -67,9 +67,9 @@ export default function Dispute() {
                 variant="filled"
                 required
                 fullWidth
-                id="ticketid"
-                label="Ticket ID#"
-                name="ticketid"
+                id="orderid"
+                label="Order ID#"
+                name="orderid"
                 className='bg-white rounded-lg'
               />
               <Button
