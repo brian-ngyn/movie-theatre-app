@@ -1,17 +1,17 @@
 import { Formik, Field, ErrorMessage } from 'formik';
 import { Form, Button, Input, Select, Card, InputNumber, message } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import KoolContainer from "../KoolContainer/KoolContainer";
 import { Typography } from "@material-tailwind/react";
 import { useUserAuth } from '../authentication/UserAuthContext';
 import moment from 'moment';
-
-
+import axios from 'axios';
 
 const Checkout = () => {
     const { user } = useUserAuth();
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [guestUser, setGuestUser] = useState({
         name: '',
@@ -21,50 +21,22 @@ const Checkout = () => {
         cvv: '',
     });
 
-    const handleSubmitGuest = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget); // this is the form data
-        console.log({
-            name: data.get('name'),
-            email: data.get('email'),
-            cardnumber: data.get('cardnumber'),
-            expirationdate: data.get('expirationdate'),
-            cvv: data.get('cvv'),
-        });
-
-        // redirect to the another page is yet to made, just send to home page for now
-        window.location.href = '/';
-        // show a success message
-        message.success('Thank you for your purchase!').then(r => console.log(r));
-
-    };
-
-    const handleSubmitRegisteredUser = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget); // this is the form data
-        console.log({
-            name: data.get('name'),
-            email: data.get('email'),
-            cardnumber: data.get('cardnumber'),
-            expirationdate: data.get('expirationdate'),
-            cvv: data.get('cvv'),
-        });
-
-        // redirect to the another page is yet to made, just send to home page for now
-        window.location.href = '/';
-        // show a success message
-        message.success('Thank you for your purchase!').then(r => console.log(r));
-
-    };
-
     const showFormGuest = () => {
         return (
-            <Form onSubmit={handleSubmitGuest}>
+            <Form onFinish={handleSubmitGuest}>
                 <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
-
                 <Typography
+                    Typography color="blue-gray" 
+                    size="2xl" style={{ 
+                        textAlign: "center", 
+                        fontSize: 24, 
+                        fontWeight: "700", 
+                        textShadow: "2px 2px 4px #000000" 
+                    }}
+                >
+                Personal Information
+                </Typography>
 
-                    Typography color="blue-gray" size="2xl" style={{ textAlign: "left", paddingLeft: 25, paddingBottom: 10, fontSize: 24, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Personal Information</Typography>
                 <Form.Item style={{ textAlign: "left", paddingLeft: 25, paddingRight: 25 }}>
                     <label htmlFor="name">Name:</label>
                     <Input
@@ -128,25 +100,109 @@ const Checkout = () => {
 
                 </Form.Item>
                 <Form.Item style={{ textAlign: "center", paddingLeft: 25, paddingRight: 25 }}>
-                    <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>
-                        Submit
+                    <Button type="default" htmlType="submit" style={{ marginRight: 10 }}>
+                        Purchase
                     </Button>
-                    <Button type="primary" htmlType="submit" onClick={handleCancel}>
+                    <Button type="default" htmlType="submit" onClick={handleCancel}>
                         Cancel
                     </Button>
-
                 </Form.Item>
             </Form>
         );
     }
 
+    
     const showFormRegistered = () => {
-        return (<p>BIG DICK</p>);
+        return (
+            <Form onFinish={handleSubmitRegisteredUser}>
+                <Typography color="blue-gray" size="4xl" style={{ textAlign: "center", fontSize: 36, fontWeight: "700", textShadow: "2px 2px 4px #000000" }}>Checkout</Typography>
+                <Typography
+                    Typography color="blue-gray" 
+                    size="2xl" style={{ 
+                        textAlign: "center", 
+                        fontSize: 24, 
+                        fontWeight: "700", 
+                        textShadow: "2px 2px 4px #000000" 
+                    }}
+                    >
+                Personal Information
+                </Typography>
+                <br/>
+                <Typography
+                    Typography color="blue-gray" 
+                    size="xl" style={{ 
+                        textAlign: "left", 
+                        fontSize: 16, 
+                        fontWeight: "700", 
+                        textShadow: "2px 2px 4px #000000" 
+                    }}
+                    >
+                Using saved information from profile
+                </Typography>
+                <Typography
+                    Typography color="blue-gray" 
+                    size="xl" style={{ 
+                        textAlign: "left", 
+                        paddingleft: 25,
+                        fontSize: 16, 
+                        textShadow: "2px 2px 4px #000000" 
+                    }}
+                    >
+                Name - {user.fullname}
+                <br/>
+                Email - {user.email}
+                <br/>
+                <br/>
+                Credit Card - ending in {user.creditcardnumber.slice(-4)}
+                <br/>
+                Expiry Date - {user.expirydate}
+                </Typography>
+                <br/>
+                <Form.Item style={{ textAlign: "center", paddingLeft: 25, paddingRight: 25 }}>
+                    <Button type="default" htmlType="submit" style={{ marginRight: 10 }}>
+                        Purchase
+                    </Button>
+                    <Button type="default" htmlType="submit" onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                </Form.Item>
+            </Form>
+        );
     }
+    
+    const handleSubmitGuest = (e) => {
+        console.log("guest checkout");
+        axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
+            isGuestCheckout: true,
+            email: guestUser.email,
+            card_number: guestUser.cardnumber,
+            expiry_date: guestUser.expirationdate,
+            cvc: guestUser.cvv,
+            timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+            payment_amount: location.state.seats_ids.length * 10
+        }).then((response) => {
+            console.log(response);
+        });
+    };
 
+    const handleSubmitRegisteredUser = (e) => {
+        console.log("registered user checkout");
+        axios.post("http://35.183.16.214/server/endpoints/post/checkout.php", {
+            isGuestCheckout: false,
+            email: user.email,
+            card_number: user.creditcardnumber,
+            expiry_date: user.expirydate,
+            cvc: user.cvc,
+            timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+            payment_amount: location.state.seats_ids.length * 10
+        }).then((response) => {
+            console.log(response);
+        });
+    };
+    
     const handleCancel = (e) => {
         e.preventDefault();
-        window.location.href = '/seats';
+        navigate("/");
     }
 
     useEffect(() => {
@@ -166,7 +222,6 @@ const Checkout = () => {
                             <div>{location.state.theatre_name}</div>
                             <div>{location.state.show_date}</div>
                             <div>At {moment(location.state.show_start, [moment.ISO_8601, 'HH:mm:ss']).format('LT')}</div>
-
                         </div>
                         <div className='grid col-span-1 bg-white rounded-xl w-1/12'></div>
                         <div className='grid col-span-2 w-4/5'>
