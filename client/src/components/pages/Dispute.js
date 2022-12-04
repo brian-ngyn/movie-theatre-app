@@ -16,6 +16,7 @@ import NavBar from "../navbar/NavBar";
 import { useUserAuth } from '../authentication/UserAuthContext';
 import { useEffect } from 'react';
 import KoolContainer from '../KoolContainer/KoolContainer';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -29,6 +30,12 @@ export default function Dispute() {
       email: data.get('email'),
       orderid: data.get('orderid'),
     });
+    console.log("http://35.183.16.214/server/endpoints/get/cancelticket.php?user_email=" + data.get('email') + "&payment_id=" + data.get('orderid'));
+    // axios.get("http://35.183.16.214/server/endpoints/get/cancelticket.php?user_email=" + data.get('email') + "&payment_id")
+    // send a get request to the server with the order id and email
+    // if the order id and email match, then send the user to the dispute page
+    // if the order id and email do not match, then send the user to the error page
+
   };
 
   useEffect(() => {

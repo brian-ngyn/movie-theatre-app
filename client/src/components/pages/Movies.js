@@ -43,6 +43,14 @@ const Movies = () => {
     }});
   };
 
+  const presaleCheck = (public_date) => {
+    if (public_date > today){
+      return (
+        <p className="text-red-500">*PRESALE*</p>
+      );
+    }
+  }
+
   const movieList = movies.map((movie) => {
     // if the user is signed in, show all movies
     // else, if the user is not signed in, then only show movies where TODAY > public date
@@ -58,6 +66,7 @@ const Movies = () => {
           />
           <h2 className="">{movie.movie_title}</h2>
           <p>{movie.movie_duration}</p>
+          <p>{presaleCheck(movie.public_date)}</p>
         </div>
       );
     } else {
