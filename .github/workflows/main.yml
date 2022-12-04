@@ -21,7 +21,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 13.x
-    
+    - name: Change to client
+      run: cd client
+      
     - name: Install NPM packages
       run: npm ci
     
