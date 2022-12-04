@@ -17,6 +17,7 @@ import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import moment from 'moment';
 
 const theme = createTheme();
 
@@ -26,10 +27,7 @@ export default function Seats() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [seats, setSeats] = useState([
-
-
-  ]);
+  const [seats, setSeats] = useState([]);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [ticketAmount, setTicketAmount] = useState(0);
@@ -41,35 +39,45 @@ export default function Seats() {
 
   useEffect(() => {
 
-
     // GET SEATS
     console.log("showtime selected from previous page:", location.state.showtime_id);
     axios.get("http://35.183.16.214/server/endpoints/get/seats.php?showtime_id=" + location.state.showtime_id)
       .then((response) => {
-        console.log("Seats response:", response.data.body);
+        console.log(response.data.body);
         setSeats(response.data.body);
       });
 
-    // GET PRESALE STATUS
-
-
   }, []);
 
-
+  useEffect(() => {
+    // GET PRESALE STATUS
+    if (moment().isBefore(moment(location.state.public_date))) {
+      setPresaleMode(true);
+      const presaleLimit = 0.1 * seats.length;
+      setPresaleAvailable(Math.floor(presaleLimit - seats.filter((seat) => seat.seat_status == 1).length));
+    }
+  }, [seats])
 
   // UPDATING FUNCTIONS
   const selectSeat = (id) => {
-    if (!selectedSeats.find((seat) => seat === id) && ticketAmount) {
+    if (!selectedSeats.find((seat) => seat === id) && seats.filter((seat) => seat.id == id)[0].seat_status == 0 && ticketAmount) {
       console.log("seat selected:", id);
       const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
       setSelectedSeats([...reducedSeats, id]);
     }
   }
+
   const removeAmount = () => {
     if (ticketAmount > 1) {
       setTicketAmount(ticketAmount - 1);
       const reducedSeats = selectedSeats.filter((_, index) => index > selectedSeats.length - ticketAmount);
       setSelectedSeats([...reducedSeats]);
+    }
+  }
+
+  const addAmount = () => {
+    if (ticketAmount < presaleAvailable && ticketAmount < seats.filter((seat) => seat.seat_status == 0).length) {
+      setTicketAmount(ticketAmount + 1);
     }
   }
 
@@ -84,6 +92,7 @@ export default function Seats() {
         movie_id: location.state.movie_id,
         showtime_id: location.state.showtime_id,
         seats_ids: selectedSeats,
+        public_date: location.state.public_date,
       }
     });
   };
@@ -92,12 +101,13 @@ export default function Seats() {
     <ThemeProvider theme={theme}>
 
       <KoolContainer>
-        <div className='grid h-full grid-cols-10'>
+        <div className='grid h-full grid-cols-11'>
           <div className='grid h-full col-span-2 '>
             <div className='bg-white opacity-75 h-full w-full text-black'>
+              <h2 className='text-red-500 mt-3 text-2xl'>{presaleMode ? "*Presale*" : null}</h2>
               <h2 className='text-black mt-3 text-2xl'>Tickets</h2>
               <div className='border-black border rounded-2xl w-4/5 h-10 grid grid-cols-3 m-auto mt-4 justify-center items-center'>
-                <div className='grid text-black h-full border-black border rounded-l-2xl justify-center items-center' onClick={() => setTicketAmount(ticketAmount + 1)}>
+                <div className='grid text-black h-full border-black border rounded-l-2xl justify-center items-center' onClick={addAmount}>
                   +
                 </div>
                 <div className='grid text-black h-full justify-center items-center'>
@@ -118,17 +128,30 @@ export default function Seats() {
                   </div>
                 ))}
               </div>
+              <div className='grid m-auto w-4/5 mt-4'>
+                <div className='grid text-black h-ful w-full justify-center items-center'>
+                  <div className='text-black m-auto w-full border p-3'>
+                    {presaleMode ? (
+                      <p className='text-red-500'>Only {presaleAvailable} ticket(s) left in presale!</p>)
+                      : !presaleAvailable ?
+                        <p className='text-red-500'>No tickets left in presale</p>
+                        : null}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className='grid h-full col-span-8'>
-
-            <div className='grid border m-auto w-3/5 h-full rounded-lg mt-4 bg-white opacity-95 '>
+          <div className='grid h-full col-span-6'>
+            <div className='grid border m-auto w-4/5 h-full rounded-lg mt-4 bg-white opacity-95 '>
               <div className='m-auto bg-black w-11/12 rounded-xl'>SCREEN</div>
               <div className='grid grid-cols-10 p-3'>
                 {seats.map((seat) => (
                   <div key={seat.id} className='grid grid-cols-1 rounded-md bg-black h-10 w-10 justify-center items-center cursor' onClick={() => selectSeat(seat.id)}>
                     {
-                      selectedSeats.includes(seat.id) ?
+                      seat.seat_status != 0 ? (
+                        <div className='grid bg-white rounded-md text-white text-4xl opacity-50 h-full w-full m-auto'>
+                        </div>
+                      ) : selectedSeats.includes(seat.id) ?
                         <div className='grid rounded-md bg-white m-1 opacity-100 h-4/5 w-4/5 m-auto text-black'>
                           X
                         </div>
@@ -156,9 +179,41 @@ export default function Seats() {
 
             </div>
           </div>
+          <div className='grid h-2/5 mt-5 col-span-2'>
+            <div className='grid bg-white rounded-2xl h-full w-full m-auto p-3'>
+              <p className='text-black'>Legend:</p>
+              <div className='grid grid-cols-2'>
+                <div className='grid col-span-1 grid-cols-1 rounded-md bg-black h-10 w-10 justify-center items-center'>
+                  <div className='grid bg-white rounded-md text-white text-4xl opacity-50 h-full w-full m-auto'></div>
+                </div>
+                <div className='grid col-span-1 text-black text-left'>
+                  Unavailable
+                </div>
+              </div>
+
+              <div className='grid grid-cols-2'>
+                <div className='grid col-span-1 grid-cols-1 rounded-md bg-black h-10 w-10 justify-center items-center'>
+                  <div className='grid rounded-md bg-white m-1 opacity-100 h-4/5 w-4/5 m-auto text-black'>X</div>
+                </div>
+                <div className='grid col-span-1 text-black text-left'>
+                  Your Seat
+                </div>
+              </div>
+
+              <div className='grid grid-cols-2'>
+                <div className='grid grid-cols-1 rounded-md bg-black h-10 w-10 justify-center items-center'>
+                </div>
+                <div className='grid col-span-1 text-black text-left'>
+                  Available
+                </div>
+              </div>
+
+
+            </div>
+          </div>
         </div>
 
       </KoolContainer>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

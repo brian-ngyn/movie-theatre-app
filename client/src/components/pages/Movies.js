@@ -18,6 +18,7 @@ const Movies = () => {
     console.log("theatre selected from previous page:", theatre_id);
     axios.get("http://35.183.16.214/server/endpoints/get/movies.php?theatre_id=" + theatre_id)
     .then((response) => {
+      console.log("Movies response:", response.data.body);
       setMovies(response.data.body);
     });
   };

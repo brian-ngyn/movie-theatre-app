@@ -1,7 +1,13 @@
 <?php
 
-
-
 include_once('../endpointIncludes.php');
 
-echo "Test6";
+mail(
+    "me@ideen.ca",
+    "Checkout",
+    "Checkout",
+    "From: ibanijamali@gmail.com"
+);
+
+
+
