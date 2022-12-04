@@ -7,7 +7,11 @@ on:
   pull_request:
     branches:
       - main
-
+      
+defaults:
+  run:
+    working-directory: client # The working directory path
+    
 jobs:
   build:
     name: Build
@@ -24,15 +28,12 @@ jobs:
       
     - name: Install NPM packages
       run: npm ci
-      working-directory: client
     
     - name: Build project
       run: npm run build
-      working-directory: client
       
     - name: Run tests
       run: npm run test
-      working-directory: client
 
     - name: Upload production-ready build files
       uses: actions/upload-artifact@v2
