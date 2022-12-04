@@ -39,6 +39,7 @@ const Showtimes = () => {
     navigate('/seats', {state: {
       theatre_id: location.state.theatre_id,
       movie_id: location.state.movie_id,
+      public_date: location.state.public_date,
       showtime_id: showtime_id,
     }});
   };
