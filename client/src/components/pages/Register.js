@@ -16,19 +16,27 @@ import NavBar from "../navbar/NavBar";
 import KoolContainer from '../KoolContainer/KoolContainer';
 import { useUserAuth } from '../authentication/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import moment from 'moment';
 
 const theme = createTheme();
 
 export default function Register() {
-  const { userid, signup } = useUserAuth();
+  const { user, signup } = useUserAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signup(data.get('email'), data.get('password'), data.get('fullname'), data.get('creditcard'), data.get('cvc'), data.get('expirydate'));
-    navigate('/');
   };
+
+  useEffect(() => {
+    if (user) {
+      window.confirm("Thank you for signing up! You will be charged $20. Your membership expires on " + moment().add(365, 'days').format('MMMM Do YYYY') + ".");
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,7 +45,7 @@ export default function Register() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 4,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -86,6 +94,7 @@ export default function Register() {
               variant="filled"
               required
               fullWidth
+              inputProps={{ maxLength: 16 }}
               name="creditcard"
               label="Credit Card Number"
               id="creditcard"
@@ -96,6 +105,7 @@ export default function Register() {
               variant="filled"
               required
               fullWidth
+              inputProps={{ maxLength: 3 }}
               name="cvc"
               label="CVC"
               id="cvc"
@@ -106,6 +116,7 @@ export default function Register() {
               variant="filled"
               required
               fullWidth
+              inputProps={{ maxLength: 4 }}
               name="expirydate"
               label="Expiry (MMYY)"
               id="expiry"
@@ -120,6 +131,9 @@ export default function Register() {
               Register
             </Button>
             <Grid container>
+              <Grid item>
+                Note: A $20 membership fee applies for registering.
+              </Grid>
               <Grid item>
                 <Link href="/login" variant="body2">
                   {"Already have an account? Sign In"}

@@ -70,6 +70,7 @@ const Checkout = () => {
                         id="cardnumber"
                         name="cardnumber"
                         type="text"
+                        maxLength={16}
                         placeholder="Card Number"
                         value={guestUser.cardnumber}
                         onChange={(e) => setGuestUser({ ...guestUser, cardnumber: e.target.value })}
@@ -82,7 +83,8 @@ const Checkout = () => {
                         id="expirationdate"
                         name="expirationdate"
                         type="text"
-                        placeholder="Expiration Date"
+                        maxLength={4}
+                        placeholder="Expiration Date (MMYY)"
                         value={guestUser.expirationdate}
                         onChange={(e) => setGuestUser({ ...guestUser, expirationdate: e.target.value })}
                         required
@@ -94,6 +96,7 @@ const Checkout = () => {
                         id="cvc"
                         name="cvc"
                         type="text"
+                        maxLength={3}
                         placeholder="CVC"
                         value={guestUser.cvv}
                         onChange={(e) => setGuestUser({ ...guestUser, cvv: e.target.value })}
@@ -282,7 +285,7 @@ const Checkout = () => {
                             <p>Thank you for using KoolTickets!</p>
                             <h4 className='mt-36'>Cancellation Policy:</h4>
                             <p>You may cancel your ticket 72 hours before the showtime.</p>
-                            <p className='text-red-500'>Please note a 15% cancellation will apply if you are not a registered user. Consider signing up today!</p>
+                            <p className='text-red-500'>Please note a 15% cancellation will apply if you are not a registered user. Consider signing up if you haven't already!</p>
                         </div>
                         : user ? showFormRegistered()
                             : showFormGuest()}
