@@ -46,7 +46,8 @@ export default function CancelTicket() {
                 setShowInformation(response2.data.body);
               });
           }
-
+        } else {
+          window.alert("No ticket found with that email and order id.\nPlease try again.");
         }
       });
   };
@@ -62,7 +63,7 @@ export default function CancelTicket() {
       return alert("Sorry, you can not cancel a ticket within 72 hours of the show start time.");
     }
     if (displayInformation[0].seat_status === "1") {
-      if (window.confirm("Your full amount will be refunded")) {
+      if (window.confirm("As a member, you are eligible for a full refund. Thank you for choosing KoolTickets!\n\nWould you like to continue?")) {
         axios.post("http://localhost:3001/server/endpoints/post/performcancel.php", {
           displayInformation: displayInformation
         })
@@ -81,7 +82,7 @@ export default function CancelTicket() {
           });
       }
     } else {
-      if (window.confirm("You will recieve an 85% refund")) {
+      if (window.confirm("As a guest, you are eligible for an 85% refund.\n\nWould you like to continue?")) {
         axios.post("http://localhost:3001/server/endpoints/post/performcancel.php", {
           displayInformation: displayInformation
         })
