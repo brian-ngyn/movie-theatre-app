@@ -4,6 +4,10 @@
 require_once('../endpointIncludes.php');
 assertRequestMethod('GET');
 
-$sql = "SELECT * FROM Theatres";
-$result = DBConnection::getInstance()->query($sql);
-$rr = new RESTful($result);
+/** 
+ * Endpoint to return all theatres.
+ */
+
+$sql = "SELECT * FROM Theatres"; // Prepare the SQL statement
+$result = DBConnection::getInstance()->query($sql); // execute the statement
+$rr = new RESTful($result); // return the result to user in REST format

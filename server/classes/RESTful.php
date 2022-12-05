@@ -12,10 +12,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/server/globalIncludes.php');
 // require_once($_SERVER['DOCUMENT_ROOT'].'/globalIncludes.php');
 
 
-class RESTful {
+class RESTful { // class to format API responses in REST format.
     public $returnObj = [];
 
-    public function __construct($result){
+    public function __construct($result){ // constructor
         if (DBConnection::getInstance()->error) {
             $this->error(DBConnection::getInstance()->error);
         } elseif($result !== true) {
@@ -28,19 +28,19 @@ class RESTful {
         }
     }
     
-    public function addRow($row){
+    public function addRow($row){ // helper function
         array_push($this->returnObj, $row);
     }
 
-    public function getLastInsert(){
+    public function getLastInsert(){ // helper function
         return DBConnection::getInstance()->insert_id;
     }
 
-    public function error($row){
+    public function error($row){ // helper function
         echo json_encode((object) ["error"=> $row, "status"=> 500]);
     }
 
-    public function sendResult(){
+    public function sendResult(){ // helper function
         echo json_encode((object) ["body"=> $this->returnObj, "status"=> 200]);
     }
 }
