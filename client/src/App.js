@@ -12,6 +12,7 @@ import Seats from './components/pages/Seats';
 import Checkout from "./components/pages/Checkout";
 import Showtimes from './components/pages/Showtimes';
 import { UserAuthContextProvider } from './components/authentication/UserAuthContext';
+import Admin from './components/pages/Admin';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/seats" element={<Seats />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/showtimes" element={<Showtimes />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </UserAuthContextProvider>
       </div>
